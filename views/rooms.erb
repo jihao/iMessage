@@ -1,0 +1,8 @@
+<% @rooms.each_with_index do |room,index| %>
+	<form method="post" action="/room/enter" name="form_<%=index%>"class="well form-inline">
+	  <label> <%= room["name"] %> </label>
+	  <input type="hidden" name="room_id" value='<%= room["objectId"] %>'>
+	  <input type="password" name="password" class="input-small" placeholder="Password">
+	  <button type="submit" class="btn">Enter</button>
+	</form>
+<% end %>
