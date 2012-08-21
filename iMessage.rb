@@ -43,8 +43,8 @@ post '/room/enter' do
     puts "FAILED TO ENTER"
     redirect "/rooms"
   else
-    # TODO: need get for /iMessage
-    redirect "/iMessage"
+    session[:room_id] = room_id 
+    redirect "/iMessage/#{room_id}"
   end
 end
 
@@ -58,9 +58,16 @@ post '/iMessage' do
       "message" => message
   }
   msg.save
-  redirect "/iMessage"
+  redirect "/iMessage/#{room_id}"
 end
 get '/iMessage/:room_id' do
-  messages = Parse::Query.new("Message").eq("room_id",params[:room_id]).get
-  "messages size=#{messages.size}"
+  if session[:room_id] != params[:room_id]
+    puts "You have to type password to enter this room"
+    redirect "/rooms"
+  else
+    @messages = Parse::Query.new("Message").eq("room_id",params[:room_id]).get
+    puts "messages size=#{@messages.size}"
+    erb :imessage
+  end
+  
 end
