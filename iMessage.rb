@@ -65,7 +65,12 @@ get '/iMessage/:room_id' do
     puts "You have to type password to enter this room"
     redirect "/rooms"
   else
-    @messages = Parse::Query.new("Message").eq("room_id",params[:room_id]).get
+    query = Parse::Query.new("Message")
+    query.limit = 20
+    query.skip = (params[:page].to_i * 20) if params[:page]
+    query.order_by = "createdAt"
+    query.order = :descending
+    @messages = query.eq("room_id",params[:room_id]).get
     puts "messages size=#{@messages.size}"
     erb :imessage
   end

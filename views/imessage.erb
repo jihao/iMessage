@@ -1,8 +1,20 @@
 
+<form method="post" action="/iMessage" name="messageForm"class="well form-inline">
+   <input type="hidden" name="room_id" value='<%= params["room_id"] %>'>
+   <img src="http://placehold.it/70x70" class="img-polaroid">  
+   <textarea rows="3" name="message" placeholder="say some words to the other one..." style="height:110px;"></textarea>
+   <button type="submit" class="btn btn-large">Send</button>
+</form>
+
+<table class="table table-striped">
+
 <% @messages.each_with_index do |msg,index| %>
-	<%=index%>
-	  <label> <%= msg["gender"] %> </label>
-	  <label> <%= msg["message"] %> </label>
-	  <label> <%= msg["createdAt"] %> </label>
-	<br>
+ <tr>
+    <td><%=index%></td>
+    <td><%= msg["gender"] %></td>
+    <td><%= msg["message"] %></td>
+    <td><%= msg["createdAt"] %></td>
+  </tr>
 <% end %>
+
+</table>
