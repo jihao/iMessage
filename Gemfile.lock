@@ -7,6 +7,9 @@ GEM
       vcr
     patron (0.4.18)
     rack (1.4.1)
+    rack-flash3 (1.0.1)
+      rack
+      rack
     rack-protection (1.2.0)
       rack
     rest-client (1.6.7)
@@ -23,5 +26,6 @@ PLATFORMS
 
 DEPENDENCIES
   parse-ruby-client (~> 0.1.1)
+  rack-flash3
   rest-client (~> 1.6.7)
   sinatra (~> 1.3.1)

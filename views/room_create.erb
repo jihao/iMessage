@@ -1,0 +1,36 @@
+<% if flash[:notice] %>
+	<div class="alert alert-danger" style="text-align:center;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<span><%= flash[:notice] %></span>
+	</div>
+<% end %>
+
+<form class="form-horizontal" method="post" action="/room/create" >
+	<div class="control-group">
+	    <label class="control-label" for="inputName">Room Name</label>
+	    <div class="controls">
+	      <input type="text" id="inputName" name="name" placeholder="Room Name" value="<%= params[:name] %>">
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="inputPassword">Password</label>
+	    <div class="controls">
+	      <input type="text" id="inputPassword" name="password" placeholder="Password">
+	    </div>
+	  </div>
+	<div class="control-group">
+	    <label class="control-label" for="inputPasswordConfirm">Confirm Password</label>
+	    <div class="controls">
+	      <input type="text" id="inputPasswordConfirm" name="password_confirm" placeholder="Confirm Password">
+	    </div>
+	  </div>
+	
+	<div class="control-group">
+	    <div class="controls">
+	      <button type="submit" class="btn">Create Room</button>
+	    </div>
+	  </div>
+	
+   
+</form>
+

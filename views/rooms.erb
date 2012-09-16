@@ -1,8 +1,59 @@
-<% @rooms.each_with_index do |room,index| %>
-	<form method="post" action="/room/enter" name="form_<%=index%>"class="well form-inline">
-	  <label> <%= room["name"] %> </label>
-	  <input type="hidden" name="room_id" value='<%= room["objectId"] %>'>
-	  <input type="password" name="password" class="input-small" placeholder="Password">
-	  <button type="submit" class="btn">Enter</button>
-	</form>
+<% if session[:gender].nil? %>
+	<div class="alert alert-danger" style="text-align:right;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<span>Entrance Selection:</span>
+		<span><%= erb(:index, :layout => false) %></span>
+	</div>
+<% else %>
+	<div class="page-header">
+	<h1> <small>Welcome, <%= session[:gender] && session[:gender].capitalize %></small></h1>
+	</div>
+	<div class="alert alert-info" style="text-align:right;display:none;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<span>Entrance Switch:</span>
+		<span><%= erb(:index, :layout => false) %></span>
+	</div>
 <% end %>
+
+<% if flash[:notice] %>
+	<div class="alert alert-danger" style="text-align:center;">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<span><%= flash[:notice] %></span>
+	</div>
+<% end %>
+
+<table class="table">
+	<thead><tr><th>#</th>
+		<th><a href="/room/create" class="btn pull-right">Create Room</a></th>
+	</tr></thead>
+	<tbody>
+	<% @rooms.each_with_index do |room,index| %>
+		<tr><td style="vertical-align: middle;"><%= index+1 %></td><td>
+			<div class="navbar-inner">
+			                
+		<form method="post" action="/room/enter" name="form_<%=index%>" class="form-inline" style="margin: 10px 0 10px 0px;">
+		  <label style="width:200px;"><i class="<%= icon_class(index) %>"></i> <%= room["name"] %> </label>
+		  <input type="hidden" name="room_id" value='<%= room["objectId"] %>'>
+		  <input type="password" name="password" class="input" placeholder="Password">
+		  <button type="submit" class="btn">Enter</button>
+		</form>
+		
+		</div>
+		</td>
+		
+		</tr>
+	<% end %>
+	</tbody>
+	<tfooter>
+		<tr><td colspan="2">
+			<ul class="pager">
+			  <li class="previous">
+			    <a href="/rooms?p=<%= ((params[:p].to_i-1)>0 ? (params[:p].to_i-1):1) %>">&larr; Older</a>
+			  </li>
+			  <li class="next">
+			    <a href="/rooms?p=<%= (params[:p].to_i+1) %>">Newer &rarr;</a>
+			  </li>
+			</ul>
+		</td></tr>
+	</tfooter>
+</table>
