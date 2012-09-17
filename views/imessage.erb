@@ -1,4 +1,4 @@
-
+<%= erb(:header, :layout => false) %>
 <form method="post" action="/iMessage" name="messageForm"class="well form-inline">
    <input type="hidden" name="room_id" value='<%= params["room_id"] %>'>
    <img src="http://dummyimage.com/70x70" class="img-polaroid">  
@@ -7,7 +7,6 @@
 </form>
 
 <table class="table table-striped">
-
 <% @messages.each_with_index do |msg,index| %>
  <tr>
     <td><%=index%></td>
@@ -16,5 +15,4 @@
     <td><%= msg["createdAt"] %></td>
   </tr>
 <% end %>
-
 </table>

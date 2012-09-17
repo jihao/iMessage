@@ -1,30 +1,30 @@
+<%= erb(:header, :layout => false) %>
+<%= erb(:notice, :layout => false) %>
+
 <% if session[:gender].nil? %>
 	<div class="alert alert-danger" style="text-align:right;">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<span>Entrance Selection:</span>
-		<span><%= erb(:index, :layout => false) %></span>
+		<span><%= erb(:entrance, :layout => false) %></span>
 	</div>
-<% else %>
-	<div class="page-header">
-	<h1> <small>Welcome, <%= session[:gender] && session[:gender].capitalize %></small></h1>
-	</div>
+<% else %>	
 	<div class="alert alert-info" style="text-align:right;display:none;">
 		<button type="button" class="close" data-dismiss="alert">×</button>
 		<span>Entrance Switch:</span>
-		<span><%= erb(:index, :layout => false) %></span>
-	</div>
-<% end %>
-
-<% if flash[:notice] %>
-	<div class="alert alert-danger" style="text-align:center;">
-		<button type="button" class="close" data-dismiss="alert">×</button>
-		<span><%= flash[:notice] %></span>
+		<span><%= erb(:entrance, :layout => false) %></span>
 	</div>
 <% end %>
 
 <table class="table">
 	<thead><tr><th>#</th>
-		<th><a href="/room/create" class="btn pull-right">Create Room</a></th>
+		<th>
+			<a href="/logout" class="btn btn-danger pull-right">Logout</a>
+			<a href="/room/create" class="btn btn-info pull-right">Create Room</a>
+			<% if session[:room_id] %>
+			<a href="/iMessage/<%= session[:room_id]%>" class="btn btn-link pull-right"><%= session[:room_name] %></a>
+			<% end %>
+			
+			</th>
 	</tr></thead>
 	<tbody>
 	<% @rooms.each_with_index do |room,index| %>

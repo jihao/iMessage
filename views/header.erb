@@ -1,0 +1,6 @@
+<div class="page-header">
+<h1><small>Welcome, <%= session[:gender] && session[:gender].capitalize %></small></h1>
+<% if request.path_info != '/rooms'%>
+<a href="/rooms" class="btn btn-info pull-right">Rooms</a>
+<% end %>
+</div>

@@ -102,6 +102,7 @@ post '/room/enter' do
     redirect "/rooms"
   else
     session[:room_id] = room_id 
+    session[:room_name] = room.first["name"]
     redirect "/iMessage/#{room_id}"
   end
 end
