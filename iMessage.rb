@@ -9,11 +9,23 @@ set :public_folder, File.dirname(__FILE__) + '/static'
 enable :sessions
 use Rack::Flash
 
+BASIC_PASSWORD = ENV['BASIC_PASSWORD'] || 'coe283yrd'
+
 helpers do
   def icon_class(index)
     index = index%10
     ['icon-fire','icon-globe','icon-briefcase','icon-fullscreen','icon-hand-up',
       'icon-hand-right','icon-certificate','icon-folder-open','icon-random',' icon-home'][index]
+  end
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+      throw(:halt, [401, "Not authorized\n"])
+    end
+  end
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', BASIC_PASSWORD]
   end
 end
 
@@ -47,10 +59,14 @@ get '/rooms' do
 end
 
 get '/room/create' do
+  protected!
+  
   erb :room_create
 end
 
 post '/room/create' do
+  protected!
+
   name = params[:name]
   password = params[:password]
   password_confirm = params[:password_confirm]
